@@ -1,4 +1,5 @@
 {% extends '_base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}
 Tweaker | Sign Up
@@ -6,16 +7,9 @@ Tweaker | Sign Up
 
 {% block content %}
   <h2>Sign Up</h2>
-  <form method="post">
+  <form method="post" style="max-width: 500px;">
     {% csrf_token %}
-    {{ form.as_p }}
-    <!-- {% for f in form %}
-    <div class="mb-3">
-      {{ f.label }}
-      {{ f }}
-    </div>
-  
-    {% endfor %} -->
+    {{ form|crispy }}
     <button class="btn btn-success" type="submit">Sign Up</button>
   </form>
 {% endblock %}
