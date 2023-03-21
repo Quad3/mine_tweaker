@@ -47,4 +47,4 @@ jobs:
         python manage.py test
       env:
         # The hostname used to communicate with the PostgreSQL service container
-        DATABASE_URL: postgres://postgres@localhost/postgres
+        DATABASE_URL: postgres://postgres:postgres@localhost/postgres
