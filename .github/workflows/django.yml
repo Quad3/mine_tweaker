@@ -47,6 +47,4 @@ jobs:
         python manage.py test
       env:
         # The hostname used to communicate with the PostgreSQL service container
-        POSTGRES_HOST: db
-        # The default PostgreSQL port
-        POSTGRES_PORT: 5432
+        DATABASE_URL: postgres://postgres@localhost/postgres
