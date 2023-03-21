@@ -9,8 +9,8 @@ ENV PYTHONUNBUFFERED=1
 
 
 WORKDIR /app
-COPY Pipfile Pipfile.lock /app/
-RUN pip install pipenv && pipenv install --system
+COPY requirements.txt /app/
+RUN pip install -r requirements.txt
 
 # Copy project
 COPY . /app/
