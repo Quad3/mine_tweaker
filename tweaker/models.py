@@ -1,5 +1,4 @@
 from django.db import models
-from datetime import datetime
 
 from .model_mixins import RecordMixin, LikeIntermediaryMixin
 
@@ -19,7 +18,10 @@ class Post(RecordMixin):
     likes = models.ManyToManyField('accounts.CustomUser', through=PostLike)
 
     class Meta:
-        ordering = ['created_at']
+        ordering = ['-created_at']
+    
+    def __str__(self) -> str:
+        return str(self.id)
 
 
 class Comment(RecordMixin):

@@ -1,0 +1,17 @@
+{% extends '_base.html' %}
+
+{% block title %}
+Tweaker
+{% endblock %}
+
+{% block content %}
+  <a href="{% url 'post_create' %}">Create post</a>
+  <h1>Posts:</h1>
+  {% for post in posts %}
+  <div class="card" style="margin-top: 10px;">
+    <span>{{ post.owner.username }} | {{ post.modified_at }}</span>
+    <p>{{ post.text | linebreaks | truncatewords:50 }}</p>
+  </div>
+  {% endfor %}
+
+{% endblock %}
