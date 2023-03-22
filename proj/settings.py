@@ -93,6 +93,7 @@ WSGI_APPLICATION = 'proj.wsgi.application'
 DATABASES = {
     'default': env.dj_db_url('DATABASE_URL',
     default='postgres://postgres@db/postgres')
+    # postgresql://[user[:password]@][netloc][:port][/dbname][?param1=value1&...]
 }
 
 
@@ -124,7 +125,7 @@ TIME_ZONE = env("TIME_ZONE", "UTC")
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

@@ -1,6 +1,43 @@
-from django.test import SimpleTestCase
+from django.test import SimpleTestCase, TestCase
 from django.urls import reverse, resolve
+from django.contrib.auth import get_user_model
+from datetime import datetime
+
+from .models import Post
 from .views import HomePageView
+
+
+class PostTests(TestCase):
+
+    def test_create_post(self):
+        User = get_user_model()
+        user = User.objects.create_user(
+            username='testuser',
+            email='test@test.com',
+            password='testpass',
+        )
+        user2 = User.objects.create_user(
+            username='testuser2',
+            email='test@test.com',
+            password='testpass',
+        )
+        post = Post.objects.create(
+            text='some text.',
+            owner=user,
+        )
+        post.postlike_set.create(
+            user=user,
+        )
+        post.postlike_set.create(
+            user=user2,
+        )
+
+        self.assertEqual(post.text, 'some text.')
+        self.assertEqual(post.owner, user)
+        self.assertEqual(post.created_at, post.modified_at)
+        self.assertLessEqual((datetime.utcnow() - post.created_at).seconds, 2)
+        self.assertEqual(post.postlike_set.first().user, user)
+        self.assertEqual(len(post.postlike_set.get_queryset()), 2)
 
 
 class HomePageTests(SimpleTestCase):
