@@ -25,4 +25,5 @@ class Post(RecordMixin):
 
 
 class Comment(RecordMixin):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     likes = models.ManyToManyField('accounts.CustomUser', through=CommentLike)
