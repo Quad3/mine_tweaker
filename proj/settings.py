@@ -152,7 +152,7 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
-LOGIN_REDIRECT_URL = 'account_login'
+LOGIN_REDIRECT_URL = 'home'
 # LOGOUT_REDIRECT_URL = 'home' # ACCOUNT_LOGOUT_REDIRECT overrides this
 # django-allauth config
 ACCOUNT_LOGOUT_REDIRECT = 'home'
