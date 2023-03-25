@@ -23,6 +23,9 @@ urlpatterns = [
     # User management
     path('accounts/', include('allauth.urls')),
 
+    # Django debug toolbar
+    path('__debug__/', include('debug_toolbar.urls')),
+
     # Local apps
     path('', include('tweaker.urls')),
 ]
