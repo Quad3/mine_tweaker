@@ -1,0 +1,23 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'tweaker/style.css' %}">
+{% endblock %}
+
+{% block title %}
+Tweaker | {{ user.username }}'s post
+{% endblock %}
+
+{% block content %}
+  <span>{{ post.owner.username }} | {{ post.modified_at }}</span>
+  <p style="margin-top: 10px;">{{ post.text }}</p>
+  <br>
+  <h3>Comments:</h3>
+  {% for comment in comments %}
+    <div class="comment-section">
+      <span>{{ comment.owner.username }} | {{ comment.modified_at }}</span>
+      <p>{{ comment.text }}</p>
+    </div>
+  {% endfor %}
+{% endblock %}

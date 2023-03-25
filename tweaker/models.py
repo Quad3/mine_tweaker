@@ -23,7 +23,13 @@ class Post(RecordMixin):
     def __str__(self) -> str:
         return str(self.id)
 
+    def get_absolute_url(self) -> str:
+        return f'post/{self.id}'
+
 
 class Comment(RecordMixin):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     likes = models.ManyToManyField('accounts.CustomUser', through=CommentLike)
+
+    class Meta:
+        ordering = ['-created_at']

@@ -1,14 +1,14 @@
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 
-from .models import Post
+from .models import Post, Comment
 from .forms import PostForm
 
 
 class HomePageView(ListView):
     template_name = 'tweaker/posts.html'
-    queryset = Post.objects.all()
+    queryset = Post.objects.select_related('owner')
     context_object_name = 'posts'
 
 
@@ -26,3 +26,13 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         self.object.save()
         print(self.object)
         return super().form_valid(form)
+
+class PostDetailView(LoginRequiredMixin, DetailView):
+    template_name = 'tweaker/post-detail.html'
+    queryset = Post.objects.select_related('owner')
+    context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comments'] = Comment.objects.select_related('owner')
+        return context
