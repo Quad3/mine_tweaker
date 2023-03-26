@@ -3,9 +3,6 @@ from .models import Post
 
 
 class PostForm(ModelForm):
-    # def __init__(self, *args, **kwargs):
-    #     self.kwargs.pop('request')
-    #     super().__init__(*args, **kwargs)
 
     class Meta:
         model = Post

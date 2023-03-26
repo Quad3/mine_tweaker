@@ -13,7 +13,11 @@ Tweaker | {{ user.username }}'s post
   <span>{{ post.owner.username }} | {{ post.modified_at }}</span>
   <p style="margin-top: 10px;">{{ post.text }}</p>
   <br>
-  <h3>Comments:</h3>
+  {% if comments %}
+    <h3>Comments:</h3>
+  {% else %}
+    <h3>There are no comments yet</h3>
+  {% endif %}
   {% for comment in comments %}
     <div class="comment-section">
       <span>{{ comment.owner.username }} | {{ comment.modified_at }}</span>
