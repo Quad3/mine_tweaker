@@ -2,16 +2,28 @@
 {% load static %}
 
 {% block head %}
-  <link rel="stylesheet" href="{% static 'tweaker/style.css' %}">
+<link rel="stylesheet" href="{% static 'tweaker/style.css' %}">
 {% endblock %}
 
 {% block title %}
-Tweaker | {{ user.username }}'s post
+{{ post.owner.username }}'s post | Tweaker
 {% endblock %}
 
 {% block content %}
+<div class="post-body">
   <span>{{ post.owner.username }} | {{ post.modified_at }}</span>
   <p style="margin-top: 10px;">{{ post.text }}</p>
+  <br>
+</div>
+<div class="comments">
+  <div class="add-comment">
+    <form action="{% url 'comment_add' post.id %}" method="post">
+      {% csrf_token %}
+      <textarea name="text" id="id_text" rows="4"></textarea>
+      <button type="submit" class="btn btn-success">Добавить комментарий</button>
+    </form>
+  </div>
+
   <br>
   {% if comments %}
     <h3>Comments:</h3>
@@ -19,9 +31,10 @@ Tweaker | {{ user.username }}'s post
     <h3>There are no comments yet</h3>
   {% endif %}
   {% for comment in comments %}
-    <div class="comment-section">
-      <span>{{ comment.owner.username }} | {{ comment.modified_at }}</span>
-      <p>{{ comment.text }}</p>
-    </div>
+  <div class="comment-section">
+    <span>{{ comment.owner.username }} | {{ comment.modified_at }}</span>
+    <p>{{ comment.text }}</p>
+  </div>
   {% endfor %}
+</div>
 {% endblock %}

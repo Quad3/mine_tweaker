@@ -3,7 +3,7 @@ from django.urls import reverse, resolve
 from django.contrib.auth import get_user_model
 from datetime import datetime
 
-from .models import Post
+from .models import Post, Comment
 from .views import HomePageView
 
 
@@ -64,3 +64,29 @@ class HomePageTests(TestCase):
             view.func.__name__,
             HomePageView.as_view().__name__
         )
+
+
+class CommentTests(TestCase):
+
+    def test_create_comment(self):
+        User = get_user_model()
+        user = User.objects.create_user(
+            username='testuser3',
+            email='test@test.com',
+            password='testpass',
+        )
+        post = Post.objects.create(
+            text='Comment test post',
+            owner=user,
+        )
+        comment = Comment.objects.create(
+            text='first comment',
+            post=post,
+            owner=user,
+        )
+
+        self.assertEqual(len(Comment.objects.all()), 1)
+        self.assertEqual(comment.text, 'first comment')
+        self.assertEqual(comment.post, post)
+        self.assertEqual(comment.owner, user)
+        self.assertFalse(comment.likes.all())

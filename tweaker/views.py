@@ -1,9 +1,10 @@
-from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic import ListView, CreateView, DetailView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
+from django.shortcuts import get_object_or_404, redirect
 
 from .models import Post, Comment
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 
 
 class HomePageView(ListView):
@@ -19,7 +20,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse('home')
-    
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.owner = self.request.user
@@ -38,3 +39,18 @@ class PostDetailView(LoginRequiredMixin, DetailView):
         context['comments'] = Comment.objects.select_related('owner')\
             .filter(post=context['post'])
         return context
+
+
+class CommentCreateView(LoginRequiredMixin, View):
+
+    def post(self, request, post_pk, *args, **kwargs):
+        post = get_object_or_404(Post, pk=post_pk)
+
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.post = post
+            new_comment.owner = request.user
+            new_comment.save()
+
+        return redirect('post_detail', post_pk)

@@ -19,7 +19,7 @@ class Post(RecordMixin):
 
     class Meta:
         ordering = ['-created_at']
-    
+
     def __str__(self) -> str:
         return str(self.id)
 
@@ -33,3 +33,6 @@ class Comment(RecordMixin):
 
     class Meta:
         ordering = ['-created_at']
+
+    def __str__(self) -> str:
+        return str(self.id)

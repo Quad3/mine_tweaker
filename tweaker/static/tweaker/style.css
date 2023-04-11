@@ -1,3 +1,11 @@
+.post-body, .comments {
+    background-color: white;
+    margin-top: 10px;
+}
+
+.add-comment textarea {
+    width: 100%;
+}
 
 .comment-section {
     padding-left: 5px;
